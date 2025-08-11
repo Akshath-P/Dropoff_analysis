@@ -1,0 +1,13 @@
+.env
+.venv
+env/
+src/environment/
+__pycache__/
+.cache/
+src/static
+src/tempcodes
+src/metadata
+src/data
+logs.db
+log_index.json
+*.pem

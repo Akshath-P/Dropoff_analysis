@@ -1,0 +1,14 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: bi-agents-server
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+    env_file:
+      - .env
+    command: uvicorn bi_agents.main:app --host 0.0.0.0 --port 8000 --app-dir src
+    restart: unless-stopped

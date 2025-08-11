@@ -1,0 +1,23 @@
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+openai
+tiktoken
+autogen-core
+autogen-agentchat
+autogen-ext[docker]
+pandas
+azure-storage-blob
+# Code Execution
+docker
+# Async Operations
+motor
+aiomysql
+aiofiles
+aiosqlite
+aiohttp
+# Testing suite
+pytest
+httpx
+pytest-asyncio

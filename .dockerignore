@@ -1,0 +1,20 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+.env
+
+# IDE / OS specific
+.vscode/
+.idea/
+*.DS_Store
+
+# Test files
+tests/
+pytest.ini
