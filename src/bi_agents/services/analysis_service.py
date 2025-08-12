@@ -6,7 +6,7 @@ import uuid
 import logging
 import aiofiles
 from openai import AsyncOpenAI
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 
 from pydantic import ValidationError
 
@@ -48,6 +48,7 @@ def _prepare_agent_prompt(
     user_prompt: str,
     metadata: Dict[str, Any],
     work_dir: str,
+    funnelSteps : List[str],
     data_filename: Optional[str] = None,  # <-- NEW: Add data_filename parameter
 ) -> str:
     """
@@ -70,9 +71,13 @@ def _prepare_agent_prompt(
         """
 
     prompt = f"""
-    You are an expert data scientist. Your task is to provide data-driven insights based on the user's question.
+    You are an expert data scientist. Your task is to provide specialized insights into customer journey and funnel drop-off analysis.
 
     USER QUESTION: "{user_prompt}"
+
+    CRITICAL FUNNEL INFORMATION: 
+    The user has defined stages of the customer's journey with the follwoing columns, in this EXACT order. You MUST use this sequence for your funnel analysis.
+    FUNNEL STEPS: {json.dumps(funnelSteps)}
 
     {file_access_instruction}
 
@@ -203,6 +208,7 @@ async def run_analysis(prompt_input: PromptInput) -> AnalysisResult:
                 user_prompt=prompt_input.prompt,
                 metadata=metadata,
                 work_dir=str(request_work_dir),
+                funnel_steps = prompt_input.funnelSteps,
                 data_filename=data_filename,
             )
             chat_result = await groupchat.run(task=task_prompt)
