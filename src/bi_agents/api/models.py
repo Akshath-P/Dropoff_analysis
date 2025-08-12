@@ -6,6 +6,11 @@ class PromptInput(BaseModel):
     prompt: str
     collectionId: str
     conversationId: str
+    funnelSteps: List[str] = Field(
+        ...,
+        min_items = 2,
+        description= 'Asks the user for different stages in their funnel'
+    )
     model: Optional[str] = "gpt-4o-mini"
 
 
