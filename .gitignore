@@ -11,3 +11,5 @@ src/data
 logs.db
 log_index.json
 *.pem
+digest.txt
+data/ 
