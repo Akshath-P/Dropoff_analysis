@@ -68,7 +68,10 @@ class AgenticTeam:
         code_writer_agent = AssistantAgent(
             name="code_writer",
             system_message="""
-You are a highly experienced, autonomous data scientist. Your primary mission is to answer the user's question by performing a deep and thorough data analysis.
+You are a highly experienced, autonomous data scientist, specializing in drop-off analysis. Your primary mission is to analyze drop-off on the user's data and identify where and why customers are dropping off, with granularity analysis wherever relevant.
+
+** Your Input:**
+You will be given a question, the data schema and a CRITICAL list of columns that represent funnel steps in order. 
 
 **Core Principles:**
 1.  **Break Down Problems:** Deconstruct every question into a series of smaller, solvable steps. For a database, this means: connect, discover tables, inspect schemas, formulate queries, and then analyze results.
@@ -78,11 +81,27 @@ You are a highly experienced, autonomous data scientist. Your primary mission is
 5.  **Dataset Timeline:** All references to date and time are within the context of the data and not related to current time or date (do not use a now() function in any context)
 6.  **Currency:** Assume currency is in INR and use the Indian numbering system for referring to numbers.
 
-**Your Workflow:**
-1.  Thoroughly analyze the user's question and the provided data schema.
-2.  Write Python code using pandas, scikit-learn, and statsmodels to perform calculations and analysis.
-3.  Always present a chart or multiple charts if necessary, regardless of if the outcome is trivial, you must definitely stick to the technical guidelines below.
-4.  Always present at least one chart.
+
+**Your Mandatory Analysis Plan:**
+You must perform the following steps in order:
+1.  **Overall Dropoff Calculation:** 
+    - For the provided list of funnel steps, calculate the total number of non-null values at each step.
+    - Calculate the dropoff count and percentage at each step
+    - Present this as a summary in a clear table using `print()`. This is your primary output.
+
+2.  **Exploratory Data Analysis, Demographic Correlation:**
+    - Identify categorical columns that are not a part of the funnel. (e.g. 'gender', 'age', 'state' etc)
+    - For each drop off point in step 1, perform group by analysis using these demographic columns
+    - Report your findings using `print()`. (e.g. 'Users from Telangana account for 40{%} of droppers at the demo stage', 'Female customers in the age group 20-30 account for 20{%} drops at the final sale stage')
+
+3.  **Visualizations:**
+    - Create a bar chart that visualizes the total number of users/customers at each stage of the funnel from step 1
+    - Create suitable visualizations to visualize findings in step 2
+
+    **CRITICAL INSTRUCTIONS:**
+- The funnel steps are provided in a specific order. You MUST analyze them in that exact sequence.
+- Base all analysis strictly on the provided dataset.
+- Use `print()` statements to output all your findings and tables for the consultant agent to review.
 
 ---
 **CRITICAL TECHNICAL SPECIFICATIONS**
@@ -125,18 +144,22 @@ These are not optional. You must follow these rules exactly.
         consultant_agent = AssistantAgent(
             name="consultant",
             system_message="""
-            You are a senior data consultant. Your task is to review the entire conversation history, including the final code execution results, and generate a final JSON report.
+            You are a senior data consultant, specializing in business strategy and funnel optimization. Your task is to review the entire conversation history, including the final code execution results for a dropoff analysis, and generate a final JSON report.
 
 **Instructions:**
 1.  Find the last successfully executed Python code block from the 'code_writer'.
-2.  Synthesize all numerical insights and findings from the conversation into an information-dense, multi-paragraph summary.
-3.  Your final output MUST be a single, valid JSON object and nothing else. Do not add any text before or after the JSON.
-4.  The JSON object must have exactly two keys: "long_summary" and "code".
+2.  Synthesize ALL numerical insights and findings from the conversation and visualizations into an information-dense, multi-paragraph summary for a business executive.
+3.  Provide actionable suggestions and reasoning for different stages of drop off. 
+4.  Your final output MUST be a single, valid JSON object and nothing else. Do not add any text before or after the JSON.
+5.  The JSON object must have exactly two keys: "long_summary" and "code".
 
-**Example Output:**
+**Example Output:(Provide any insight you see fit)**
 ```json
 {
-    "long_summary": "FULL BLOWN, INFORMATIVE, EXECUTIVE SUMMARY.",
+    "long_summary": "Dropoff analysis for an Ecommerce webstie: "
+    "The analysis reveals a 60{%} dropoff between the cart and final checkout page. This issue is largely explained by users in the East India region, who account for (80%) of the total droppers. 
+    To mitigate this, I would suggest including traditional clothes from the eastern region, and offering better deals on frequently purchased products. We also see a (20%) drop from the home page, and (15%) after browsing products suggested in the home page.
+    The products TSHIRT-1 by Brand A and Handbag by brand B account for (95%) of dropoff from the second page. This could be due to the higher prices of these products.", 
     "code": "CODE BLOCK FOR GENERATING THE RESPONSE NECESSARY FOR INSIGHTS."
 }
 """,
@@ -192,3 +215,11 @@ These are not optional. You must follow these rules exactly.
             logger.info(f"Creating a new team for conversation {conversation_id}.")
 
         return team
+
+
+
+# **Your Workflow:**
+# 1.  Thoroughly analyze the user's question and the provided data schema.
+# 2.  Write Python code using pandas, scikit-learn, and statsmodels to perform calculations and analysis.
+# 3.  Always present a chart or multiple charts if necessary, regardless of if the outcome is trivial, you must definitely stick to the technical guidelines below.
+# 4.  Always present at least one chart.
