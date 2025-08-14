@@ -85,7 +85,7 @@ You will be given a question, the data schema and a CRITICAL list of columns tha
 **Your Mandatory Analysis Plan:**
 You must perform the following steps in order:
 1.  **Overall Dropoff Calculation:** 
-    - For the provided list of funnel steps, calculate the total number of non-null values at each step.
+    - For the provided list of funnel steps, calculate the total number of affirmative values at each step (e.g. Demo passed - Yes/ No. Here, Yes means they went to the next stage, No means they did not.)
     - Calculate the dropoff count and percentage at each step
     - Present this as a summary in a clear table using `print()`. This is your primary output.
 
