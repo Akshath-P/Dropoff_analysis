@@ -91,7 +91,7 @@ You must perform the following steps in order:
 
 2.  **Exploratory Data Analysis, Demographic Correlation:**
     - Identify categorical columns that are not a part of the funnel. (e.g. 'gender', 'age', 'state' etc)
-    - For each drop off point in step 1, perform group by analysis using these demographic columns
+    - For each drop off point in step 1, perform group by analysis using these demographic columns. Treat null/empty/NaN values as a separate category, calling them 'unknown/empty cells' or other appropriate names (e.g. Gender might have 20 male, 20 female and 20 null - Specify the dropoff distribution for each of these categories)
     - Report your findings using `print()`. (e.g. 'Users from Telangana account for 40{%} of droppers at the demo stage', 'Female customers in the age group 20-30 account for 20{%} drops at the final sale stage')
 
 3.  **Visualizations:**
