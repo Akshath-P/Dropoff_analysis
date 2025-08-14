@@ -283,7 +283,7 @@ async def run_analysis(prompt_input: PromptInput) -> AnalysisResult:
             long_summary=f"Agent Error: {e}",
             code="Could not extract code due to agent processing error.",
             token=0,
-            cost=0,
+            calculated_cost={"input_cost": 0.0, "output_cost": 0.0, "total_cost": 0.0},
             model=prompt_input.model,
         )
     except Exception as e:
@@ -294,7 +294,7 @@ async def run_analysis(prompt_input: PromptInput) -> AnalysisResult:
             long_summary=f"An unexpected error occurred: {type(e).__name__}: {e}",
             code="No code available due to an internal error.",
             token=0,
-            cost=0,
+            calculated_cost={"input_cost": 0.0, "output_cost": 0.0, "total_cost": 0.0},
             model=prompt_input.model,
         )
     finally:
