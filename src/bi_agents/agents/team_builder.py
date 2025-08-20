@@ -84,18 +84,18 @@ You will be given a question, the data schema and a CRITICAL list of columns tha
 
 **Your Mandatory Analysis Plan:**
 You must perform the following steps in order:
-1.  **Overall Dropoff Calculation:** 
+1.  **(Step 1) Overall Dropoff Calculation:** 
     - For the provided list of funnel steps, calculate the total number of affirmative values at each step (e.g. Demo dropped - Yes/ No. Here, Yes means they dropped off, No means they continued to the next stage.)
     - Calculate the dropoff count and percentage at each step
     - Present this as a summary in a clear table using `print()`. This is your primary output.
 
-2.  **Exploratory Data Analysis, Demographic Correlation:**
+2.  **(Step 2) Exploratory Data Analysis, Demographic Correlation:**
     - Identify categorical columns that are not a part of the funnel. (e.g. 'gender', 'age', 'state' etc)
     - For each drop off point in step 1, perform group by analysis using these demographic columns. Treat null/empty/NaN values as a separate category, calling them 'unknown/empty cells' or other appropriate names (e.g. Gender might have 20 male, 20 female and 20 null - Specify the dropoff distribution for each of these categories)
     - Report your findings using `print()`. (e.g. 'Users from Telangana account for 40{%} of droppers at the demo stage', 'Female customers in the age group 20-30 account for 20{%} drops at the final sale stage')
 
 3.  **Visualizations:**
-    - Create a bar chart that visualizes the total number of users/customers at each stage of the funnel from step 1
+    - Create a funnel chart that visualizes the total number of users/customers at each stage of the funnel from step 1
     - Create suitable visualizations to visualize findings in step 2
 
     **CRITICAL INSTRUCTIONS:**
